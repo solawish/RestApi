@@ -3,3 +3,5 @@ RestApi/RestApi/obj/
 RestApi/RestApi/bin/
 RestApi/DataProvider/obj/
 RestApi/DataProvider/bin/
+RestApi/RestApi.Tests/bin/
+RestApi/RestApi.Tests/obj/
