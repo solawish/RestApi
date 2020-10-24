@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Dapper;
@@ -11,75 +12,75 @@ namespace DataProvider
 {
     public class SqlServerDataProvider : IDataProvider
     {
-        private string connectionString;
+        private string _connectionString;
 
-        public SqlServerDataProvider(IConfiguration configuration)
+        public SqlServerDataProvider(string connectionString)
         {
-            connectionString = configuration["ConnectionStrings:SqlServer"];
+            _connectionString = connectionString;
         }
 
-        public Task<int> ExecuteNonQueryAsync(string commandText, CommandType commandType)
+        public async Task<int> ExecuteNonQueryAsync(string commandText, CommandType commandType)
         {
-            using (IDbConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = new SqlConnection(_connectionString))
             {
                 con.Open();
-                return con.ExecuteAsync(commandText, null, null, null, commandType);
+                return await con.ExecuteAsync(commandText, null, null, null, commandType);
             }
         }
 
-        public Task<int> ExecuteNonQueryAsync(string commandText, CommandType commandType, DynamicParameters commandParameters)
+        public async Task<int> ExecuteNonQueryAsync(string commandText, CommandType commandType, DynamicParameters commandParameters)
         {
-            using (IDbConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = new SqlConnection(_connectionString))
             {
                 con.Open();
 
-                return con.ExecuteAsync(commandText, commandParameters, null, null, commandType);
+                return await con.ExecuteAsync(commandText, commandParameters, null, null, commandType);
             }
         }
 
-        public Task<int> ExecuteNonQueryAsync(IDbConnection dbConnection, IDbTransaction dbTransaction, string commandText, CommandType commandType)
+        public async Task<int> ExecuteNonQueryAsync(IDbConnection dbConnection, IDbTransaction dbTransaction, string commandText, CommandType commandType)
         {
-            return dbConnection.ExecuteAsync(commandText, null, dbTransaction, null, commandType);
+            return await dbConnection.ExecuteAsync(commandText, null, dbTransaction, null, commandType);
         }
 
-        public Task<int> ExecuteNonQueryAsync(IDbConnection dbConnection, IDbTransaction dbTransaction, string commandText, CommandType commandType, DynamicParameters commandParameters)
+        public async Task<int> ExecuteNonQueryAsync(IDbConnection dbConnection, IDbTransaction dbTransaction, string commandText, CommandType commandType, DynamicParameters commandParameters)
         {
-            return dbConnection.ExecuteAsync(commandText, commandParameters, dbTransaction, null, commandType);
+            return await dbConnection.ExecuteAsync(commandText, commandParameters, dbTransaction, null, commandType);
         }
 
-        public Task<T> ExecuteScalarAsync<T>(string commandText, CommandType commandType)
+        public async Task<T> ExecuteScalarAsync<T>(string commandText, CommandType commandType)
         {
-            using (IDbConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = new SqlConnection(_connectionString))
             {
                 con.Open();
-                return con.ExecuteScalarAsync<T>(commandText, null, null, null, commandType);
+                return await con.ExecuteScalarAsync<T>(commandText, null, null, null, commandType);
             }
         }
 
-        public Task<T> ExecuteScalarAsync<T>(string commandText, CommandType commandType, DynamicParameters commandParameters)
+        public async Task<T> ExecuteScalarAsync<T>(string commandText, CommandType commandType, DynamicParameters commandParameters)
         {
-            using (IDbConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = new SqlConnection(_connectionString))
             {
                 con.Open();
-                return con.ExecuteScalarAsync<T>(commandText, commandParameters, null, null, commandType);
+                return await con.ExecuteScalarAsync<T>(commandText, commandParameters, null, null, commandType);
             }
         }
 
-        public Task<IEnumerable<T>> GetDataModelAsync<T>(string commandText, CommandType commandType)
+        public async Task<IEnumerable<T>> GetDataModelAsync<T>(string commandText, CommandType commandType)
         {
-            using (IDbConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = new SqlConnection(_connectionString))
             {
                 con.Open();
-                return con.QueryAsync<T>(commandText, null, null, null, commandType);
+                return await con.QueryAsync<T>(commandText, null, null, null, commandType);
             }
         }
 
-        public Task<IEnumerable<T>> GetDataModelAsync<T>(string commandText, CommandType commandType, DynamicParameters commandParameters)
+        public async Task<IEnumerable<T>> GetDataModelAsync<T>(string commandText, CommandType commandType, DynamicParameters commandParameters)
         {
-            using (IDbConnection con = new SqlConnection(connectionString))
+            using (IDbConnection con = new SqlConnection(_connectionString))
             {
                 con.Open();
-                return con.QueryAsync<T>(commandText, commandParameters, null, null, commandType);
+                return await con.QueryAsync<T>(commandText, commandParameters, null, null, commandType);
             }
         }
     }

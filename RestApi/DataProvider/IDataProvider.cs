@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataProvider
 {
-    interface IDataProvider
+    public interface IDataProvider
     {
         Task<IEnumerable<T>> GetDataModelAsync<T>(string commandText, CommandType commandType);
         Task<IEnumerable<T>> GetDataModelAsync<T>(string commandText, CommandType commandType, DynamicParameters commandParameters);
