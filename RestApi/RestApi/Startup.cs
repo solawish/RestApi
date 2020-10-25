@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using RestApi.Middleware;
 using RestApi.Repository;
 using RestApi.Service;
 
@@ -45,6 +46,11 @@ namespace RestApi
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseMiddleware<ExceptionMiddleware>();
+                app.UseHsts();
             }
 
             app.UseHttpsRedirection();
