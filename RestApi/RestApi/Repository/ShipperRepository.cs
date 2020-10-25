@@ -20,7 +20,7 @@ namespace RestApi.Repository
 
         public async Task<int> DeleteShipper(int ShipperID)
         {
-            string sql = @"DELETE FROM [Northwind].[dbo].[Shipper] 
+            string sql = @"DELETE FROM [Northwind].[dbo].[Shippers] 
                            WHERE ShipperID = @ShipperID ";
 
             DynamicParameters parameters = new DynamicParameters();
@@ -31,7 +31,7 @@ namespace RestApi.Repository
 
         public async Task<IEnumerable<ShipperModel>> GetShipper()
         {
-            string sql = @"SELECT * FROM [Northwind].[dbo].[Shipper]";
+            string sql = @"SELECT * FROM [Northwind].[dbo].[Shippers]";
                         
             var result = await _dataProvider.GetDataModelAsync<ShipperModel>(sql, CommandType.Text);
             return result;
@@ -39,7 +39,7 @@ namespace RestApi.Repository
 
         public async Task<IEnumerable<ShipperModel>> GetShipperByID(int ShipperID)
         {
-            string sql = @"SELECT * FROM [Northwind].[dbo].[Shipper] 
+            string sql = @"SELECT * FROM [Northwind].[dbo].[Shippers] 
                            WHERE ShipperID = @ShipperID ";
 
             DynamicParameters parameters = new DynamicParameters();
@@ -50,7 +50,7 @@ namespace RestApi.Repository
 
         public async Task<int> InsertShipper(ShipperModel model)
         {
-            string sql = @"INSERT INTO [Northwind].[dbo].[Shipper] 
+            string sql = @"INSERT INTO [Northwind].[dbo].[Shippers] 
                             ([CompanyName],[Phone]) VALUES
                             (@CompanyName, @Phone) ";
 
@@ -61,7 +61,7 @@ namespace RestApi.Repository
 
         public async Task<int> UpdateShipper(ShipperModel model)
         {
-            string sql = @"UPDATE [Northwind].[dbo].[Shipper] 
+            string sql = @"UPDATE [Northwind].[dbo].[Shippers] 
                             SET [CompanyName] = @CompanyName, [Phone] = @Phone
                             WHERE [ShipperID] = @ShipperID";
 
