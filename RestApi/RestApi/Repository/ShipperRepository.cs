@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using Dapper;
 using DataProvider;
 using RestApi.Model;
 
@@ -16,29 +18,56 @@ namespace RestApi.Repository
             _dataProvider = dataProvider;
         }
 
-        public Task<int> DeleteShipper(int RegionID)
+        public async Task<int> DeleteShipper(int ShipperID)
         {
-            throw new NotImplementedException();
+            string sql = @"DELETE FROM [Northwind].[dbo].[Shipper] 
+                           WHERE ShipperID = @ShipperID ";
+
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@ShipperID", ShipperID, DbType.Int32, ParameterDirection.Input);
+            var result = await _dataProvider.ExecuteNonQueryAsync(sql, CommandType.Text, parameters);
+            return result;
         }
 
-        public Task<IEnumerable<ShipperModel>> GetShipper()
+        public async Task<IEnumerable<ShipperModel>> GetShipper()
         {
-            throw new NotImplementedException();
+            string sql = @"SELECT * FROM [Northwind].[dbo].[Shipper]";
+                        
+            var result = await _dataProvider.GetDataModelAsync<ShipperModel>(sql, CommandType.Text);
+            return result;
         }
 
-        public Task<IEnumerable<ShipperModel>> GetShipper(ShipperModel model)
+        public async Task<IEnumerable<ShipperModel>> GetShipperByID(int ShipperID)
         {
-            throw new NotImplementedException();
+            string sql = @"SELECT * FROM [Northwind].[dbo].[Shipper] 
+                           WHERE ShipperID = @ShipperID ";
+
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@ShipperID", ShipperID, DbType.Int32, ParameterDirection.Input);
+            var result = await _dataProvider.GetDataModelAsync<ShipperModel>(sql, CommandType.Text, parameters);
+            return result;
         }
 
-        public Task<int> InsertShipper(ShipperModel model)
+        public async Task<int> InsertShipper(ShipperModel model)
         {
-            throw new NotImplementedException();
+            string sql = @"INSERT INTO [Northwind].[dbo].[Shipper] 
+                            ([CompanyName],[Phone]) VALUES
+                            (@CompanyName, @Phone) ";
+
+            var parameters = new DynamicParameters(model);
+            var result = await _dataProvider.ExecuteNonQueryAsync(sql, CommandType.Text, parameters);
+            return result;
         }
 
-        public Task<int> UpdateShipper(ShipperModel model)
+        public async Task<int> UpdateShipper(ShipperModel model)
         {
-            throw new NotImplementedException();
+            string sql = @"UPDATE [Northwind].[dbo].[Shipper] 
+                            SET [CompanyName] = @CompanyName, [Phone] = @Phone
+                            WHERE [ShipperID] = @ShipperID";
+
+            var parameters = new DynamicParameters(model);
+            var result = await _dataProvider.ExecuteNonQueryAsync(sql, CommandType.Text, parameters);
+            return result;
         }
     }
 }

@@ -10,12 +10,12 @@ namespace RestApi.Service
     {
         Task<IEnumerable<ShipperModel>> GetShipper();
 
-        Task<IEnumerable<ShipperModel>> GetShipper(ShipperModel model);
+        Task<IEnumerable<ShipperModel>> GetShipperByID(int ShipperID);
 
         Task<int> InsertShipper(ShipperModel model);
 
         Task<int> UpdateShipper(ShipperModel model);
 
-        Task<int> DeleteShipper(int RegionID);
+        Task<int> DeleteShipper(int ShipperID);
     }
 }

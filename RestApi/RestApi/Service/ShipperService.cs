@@ -16,9 +16,9 @@ namespace RestApi.Service
             _shipperRepository = shipperRepository;
         }
 
-        public async Task<int> DeleteShipper(int RegionID)
+        public async Task<int> DeleteShipper(int ShipperID)
         {
-            return await _shipperRepository.DeleteShipper(RegionID);
+            return await _shipperRepository.DeleteShipper(ShipperID);
         }
 
         public async Task<IEnumerable<ShipperModel>> GetShipper()
@@ -26,9 +26,9 @@ namespace RestApi.Service
             return await _shipperRepository.GetShipper();
         }
 
-        public async Task<IEnumerable<ShipperModel>> GetShipper(ShipperModel model)
+        public async Task<IEnumerable<ShipperModel>> GetShipperByID(int ShipperID)
         {
-            return await _shipperRepository.GetShipper(model);
+            return await _shipperRepository.GetShipperByID(ShipperID);
         }
 
         public async Task<int> InsertShipper(ShipperModel model)
